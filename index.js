@@ -55,11 +55,11 @@ function getAllMovieTitles(movies) {
  *  checkIfAnyMovieHasRating(movies, "R");
  *  //> false
  */
-function checkIfAnyMovieHasRating(movies) {
+function checkIfAnyMovieHasRating(movies, rating = "G") {
   if(movies.length < 1){
     throw "No Movies!"
   }
-  return movies.some(movie => movie.rated)
+  return movies.some(movie => movie.rated === rating)
 }
 
 /**
@@ -206,7 +206,17 @@ function checkMinMetascores(movies, metascore) {
       { "James and the Giant Peach": "91%" },
     ];
  */
-function getRottenTomatoesScoreByMovie() {}
+function getRottenTomatoesScoreByMovie(movies) {
+  if (movies.length < 1){
+    throw "No Movies!"
+  }
+  return movies
+  .map( movie => {
+    const { title, ratings } = movie;
+    return { [title] : ratings }
+  })
+  .find((movie) => movie.ratings[1] === "Rotten Tomatoes")
+}
 
 // Do not change anything below this line.
 module.exports = {
